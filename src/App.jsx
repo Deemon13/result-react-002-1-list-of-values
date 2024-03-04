@@ -3,14 +3,22 @@ import styles from './css-modules/app.module.css';
 
 export const App = () => {
 	let [value, setValue] = useState('');
-	const [list, setList] = useState([]);
+	// const [list, setList] = useState([]);
 	let [error, setError] = useState('');
 
 	function onInputButtonClick() {
 		const promptValue = prompt();
-		value = setValue(promptValue);
+		if (promptValue.length < 3) {
+			error = setError('Введенное значение должно содержать минимум 3 символа');
+		} else {
+			value = setValue(promptValue);
+			error = setError('');
+		}
+		// value = setValue(promptValue);
 		console.log(promptValue);
 	}
+
+	const hasError = <div className={styles.error}>{error}</div>;
 
 	return (
 		<div className={styles.app}>
@@ -19,9 +27,7 @@ export const App = () => {
 				Текущее значение <code>value</code>: "
 				<output className={styles['current-value']}>{value}</output>"
 			</p>
-			<div className={styles.error}>
-				Введенное значение должно содержать минимум 3 символа
-			</div>
+			{error && hasError}
 			<div className={styles['buttons-container']}>
 				<button className={styles.button} onClick={onInputButtonClick}>
 					Ввести новое
