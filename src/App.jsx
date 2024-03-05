@@ -7,22 +7,18 @@ export const App = () => {
 	let [error, setError] = useState('');
 
 	const hasError = <div className={styles.error}>{error}</div>;
-	let isValueValid = false;
 
 	function onInputButtonClick() {
 		const promptValue = prompt();
 		if (promptValue.length < 3) {
 			error = setError('Введенное значение должно содержать минимум 3 символа');
-			isValueValid = false;
 		} else {
 			value = setValue(promptValue);
 			error = setError('');
-			isValueValid = true;
 		}
-		// value = setValue(promptValue);
-		console.log(promptValue);
-		console.log('isValueValid: ', isValueValid);
 	}
+
+	let isValueValid = value.length >= 3;
 
 	return (
 		<div className={styles.app}>
