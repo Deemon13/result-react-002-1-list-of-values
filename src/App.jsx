@@ -6,19 +6,23 @@ export const App = () => {
 	// const [list, setList] = useState([]);
 	let [error, setError] = useState('');
 
+	const hasError = <div className={styles.error}>{error}</div>;
+	let isValueValid = false;
+
 	function onInputButtonClick() {
 		const promptValue = prompt();
 		if (promptValue.length < 3) {
 			error = setError('Введенное значение должно содержать минимум 3 символа');
+			isValueValid = false;
 		} else {
 			value = setValue(promptValue);
 			error = setError('');
+			isValueValid = true;
 		}
 		// value = setValue(promptValue);
 		console.log(promptValue);
+		console.log('isValueValid: ', isValueValid);
 	}
-
-	const hasError = <div className={styles.error}>{error}</div>;
 
 	return (
 		<div className={styles.app}>
@@ -32,7 +36,7 @@ export const App = () => {
 				<button className={styles.button} onClick={onInputButtonClick}>
 					Ввести новое
 				</button>
-				<button className={styles.button} disabled>
+				<button className={styles.button} disabled={!isValueValid}>
 					Добавить в список
 				</button>
 			</div>
