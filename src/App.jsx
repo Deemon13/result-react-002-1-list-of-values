@@ -52,9 +52,13 @@ export const App = () => {
 				) : (
 					<ul className={styles.list}>
 						{list.map(item => {
+							const date = Date(item.id);
+							console.log(item.id);
+							console.log(date);
+							console.log(date.toLocaleString());
 							return (
 								<li key={item.id} className={styles['list-item']}>
-									{item.value}
+									{item.value} - {date.toString()}
 								</li>
 							);
 						})}
