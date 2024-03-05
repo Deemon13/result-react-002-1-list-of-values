@@ -3,7 +3,7 @@ import styles from './css-modules/app.module.css';
 
 export const App = () => {
 	let [value, setValue] = useState('');
-	// const [list, setList] = useState([]);
+	let [list, setList] = useState([]);
 	let [error, setError] = useState('');
 
 	const hasError = <div className={styles.error}>{error}</div>;
@@ -16,6 +16,11 @@ export const App = () => {
 			value = setValue(promptValue);
 			error = setError('');
 		}
+	}
+
+	function onAddButtonClick() {
+		const updatedList = [...list, { id: `${Date.now()}`, value: value }];
+		list = setList(updatedList);
 	}
 
 	let isValueValid = value.length >= 3;
@@ -32,16 +37,29 @@ export const App = () => {
 				<button className={styles.button} onClick={onInputButtonClick}>
 					Ввести новое
 				</button>
-				<button className={styles.button} disabled={!isValueValid}>
+				<button
+					className={styles.button}
+					disabled={!isValueValid}
+					onClick={onAddButtonClick}
+				>
 					Добавить в список
 				</button>
 			</div>
 			<div className={styles['list-container']}>
 				<h2 className={styles['list-heading']}>Список:</h2>
-				<p className={styles['no-margin-text']}>Нет добавленных элементов</p>
-				<ul className={styles.list}>
-					<li className={styles['list-item']}>Первый элемент</li>
-				</ul>
+				{!list.length ? (
+					<p className={styles['no-margin-text']}>Нет добавленных элементов</p>
+				) : (
+					<ul className={styles.list}>
+						{list.map(item => {
+							return (
+								<li key={item.id} className={styles['list-item']}>
+									{item.value}
+								</li>
+							);
+						})}
+					</ul>
+				)}
 			</div>
 		</div>
 	);
