@@ -21,6 +21,8 @@ export const App = () => {
 	function onAddButtonClick() {
 		const updatedList = [...list, { id: `${Date.now()}`, value: value }];
 		list = setList(updatedList);
+		value = setValue('');
+		error = setError('');
 	}
 
 	let isValueValid = value.length >= 3;
@@ -52,13 +54,11 @@ export const App = () => {
 				) : (
 					<ul className={styles.list}>
 						{list.map(item => {
-							const date = Date(item.id);
-							console.log(item.id);
-							console.log(date);
-							console.log(date.toLocaleString());
+							const date = new Date(Date(item.id));
+
 							return (
 								<li key={item.id} className={styles['list-item']}>
-									{item.value} - {date.toString()}
+									{item.value} - {date.toLocaleString()}
 								</li>
 							);
 						})}
